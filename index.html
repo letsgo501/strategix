@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategix Simulator</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+<h1>Strategix</h1>
+<p>Simulate & Optimize Your Business Strategy</p>
+</header>
 
+<section id="simulation">
+<h2>Start Your Business Simulation</h2>
+<label for="investment">Initial Investment ($):</label>
+<input type="number" id="investment" placeholder="Enter amount">
+<button onclick="runSimulation()">Simulate</button>
+<p id="result"></p>
+</section>
+
+<footer>
+<p>© 2025 Strategix. All rights reserved.</p>
+</footer>
+
+<script>
+function runSimulation() {
+let investment = document.getElementById("investment").value;
+if (investment && investment > 0) {
+let projectedRevenue = investment * (Math.random() * 2 + 0.5);
+document.getElementById("result").innerText =
+"Projected Revenue after 1 year: $" + projectedRevenue.toFixed(2);
+} else {
+document.getElementById("result").innerText = "Please enter a valid investment amount.";
+}
+}
+</script>
+</body>
+</html>
