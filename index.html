@@ -1,21 +1,36 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strategix Simulator</title>
+<title>Strategix Business Simulator</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header>
 <h1>Strategix</h1>
-<p>Simulate & Optimize Your Business Strategy</p>
+<p>Advanced Business Simulation</p>
 </header>
 
 <section id="simulation">
-<h2>Start Your Business Simulation</h2>
+<h2>Business Strategy Simulation</h2>
 <label for="investment">Initial Investment ($):</label>
 <input type="number" id="investment" placeholder="Enter amount">
+
+<label for="market">Market Trend:</label>
+<select id="market">
+<option value="growth">Growth</option>
+<option value="stable">Stable</option>
+<option value="decline">Decline</option>
+</select>
+
+<label for="competition">Competition Level:</label>
+<select id="competition">
+<option value="low">Low</option>
+<option value="moderate">Moderate</option>
+<option value="high">High</option>
+</select>
+
 <button onclick="runSimulation()">Simulate</button>
 <p id="result"></p>
 </section>
@@ -27,10 +42,22 @@
 <script>
 function runSimulation() {
 let investment = document.getElementById("investment").value;
+let market = document.getElementById("market").value;
+let competition = document.getElementById("competition").value;
+
 if (investment && investment > 0) {
-let projectedRevenue = investment * (Math.random() * 2 + 0.5);
+let baseRevenue = investment * (Math.random() * 1.5 + 0.5);
+
+// Adjust revenue based on market trends
+if (market === "growth") baseRevenue *= 1.3;
+if (market === "decline") baseRevenue *= 0.7;
+
+// Adjust revenue based on competition level
+if (competition === "high") baseRevenue *= 0.8;
+if (competition === "low") baseRevenue *= 1.2;
+
 document.getElementById("result").innerText =
-"Projected Revenue after 1 year: $" + projectedRevenue.toFixed(2);
+`Projected Revenue: $${baseRevenue.toFixed(2)}`;
 } else {
 document.getElementById("result").innerText = "Please enter a valid investment amount.";
 }
@@ -38,3 +65,4 @@ document.getElementById("result").innerText = "Please enter a valid investment a
 </script>
 </body>
 </html>
+
