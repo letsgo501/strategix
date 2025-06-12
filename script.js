@@ -1,81 +1,88 @@
-/ Listen for the simulate button click and kick off the simulation
-document.getElementById('simulateButton').addEventListener('click', function() {
-const businessName = document.getElementById('businessName').value.trim();
-const investment = parseFloat(document.getElementById('investment').value);
+// Wait for the DOM to load
+document.addEventListener('DOMContentLoaded', () => {
+const simulationForm = document.getElementById('simulationForm');
+const resultsList = document.getElementById('resultsList');
+const growthChartCtx = document.getElementById('growthChart').getContext('2d');
+let growthChart; // Global variable to store our Chart.js instance
 
-if (!businessName || isNaN(investment)) {
-alert('Please enter a valid business name and investment amount.');
+// Event listener for the simulation form submission
+simulationForm.addEventListener('submit', (e) => {
+e.preventDefault(); // Prevent traditional form submission
+
+// Read inputs
+const businessName = document.getElementById('businessName').value.trim();
+const investmentAmtInput = document.getElementById('investmentAmount').value;
+const investmentAmount = parseFloat(investmentAmtInput);
+
+// Validate inputs
+if (!businessName || isNaN(investmentAmount) || investmentAmount < 1000) {
+alert("Please enter a valid business name and an investment amount (minimum $1,000).");
 return;
 }
 
-// Generate simulation: a simple 5-year growth projection.
-let simulationData = [];
-let baseValue = investment;
+// Generate projection for 5 years
+let currentValue = investmentAmount;
+const projections = [];
+resultsList.innerHTML = ''; // Clear previous results
+
 for (let year = 1; year <= 5; year++) {
-// Simulate a realistic growth rate between 5% and 15%
-const growthRate = Math.random() * 0.10 + 0.05;
-baseValue *= (1 + growthRate);
-simulationData.push({ year: year, value: Math.round(baseValue) });
+// Generate random growth between 5% and 15%
+const growthRate = (Math.random() * (15 - 5) + 5) / 100;
+currentValue = Math.round(currentValue * (1 + growthRate));
+projections.push(currentValue);
+
+// Create a new list item for each year and add to results panel
+const li = document.createElement('li');
+li.textContent = `Year ${year}: $${currentValue.toLocaleString()}`;
+resultsList.appendChild(li);
 }
 
-// Display the simulation results
-displayOutput(businessName, simulationData);
-// Update the analytics chart with the new simulation data
-updateChart(simulationData);
-});
-
-// Function to display the simulation output in a readable list.
-function displayOutput(businessName, simData) {
-const outputDiv = document.getElementById('outputContent');
-let htmlContent = `<p><strong>${businessName}</strong> projected performance:</p>`;
-htmlContent += `<ul>`;
-simData.forEach(item => {
-htmlContent += `<li>Year ${item.year}: $${item.value}</li>`;
-});
-htmlContent += `</ul>`;
-outputDiv.innerHTML = htmlContent;
+// If there is an existing chart, destroy it before drawing a new one
+if (growthChart) {
+growthChart.destroy();
 }
 
-// Define the chart instance variable globally for reuse.
-let chart;
-
-// Function to update (or create) the Chart.js line chart
-function updateChart(simData) {
-const ctx = document.getElementById('businessChart').getContext('2d');
-
-// Prepare labels and data
-const labels = simData.map(item => "Year " + item.year);
-const dataValues = simData.map(item => item.value);
-
-// If a chart instance exists, destroy it before creating a new one
-if (chart) {
-chart.destroy();
-}
-
-chart = new Chart(ctx, {
+// Render the Chart.js line chart
+growthChart = new Chart(growthChartCtx, {
 type: 'line',
 data: {
-labels: labels,
+labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
 datasets: [{
-label: 'Business Value Over 5 Years',
-data: dataValues,
-borderColor: 'rgba(75, 192, 192, 1)',
-backgroundColor: 'rgba(75, 192, 192, 0.2)',
+label: `${businessName} Projection`,
+data: projections,
+backgroundColor: 'rgba(0, 51, 102, 0.2)', // Semi-transparent dark blue fill
+borderColor: 'rgba(0, 51, 102, 1)', // Dark blue border
+borderWidth: 2,
 fill: true,
-tension: 0.15
+tension: 0.2,
 }]
 },
 options: {
+responsive: true,
 scales: {
 y: {
 beginAtZero: true,
 ticks: {
+// Format the y-axis labels as dollars
 callback: function(value) {
-return '$' + value;
+return '$' + value.toLocaleString();
+}
+}
+}
+},
+plugins: {
+legend: {
+position: 'top'
+},
+tooltip: {
+callbacks: {
+label: function(context) {
+return '$' + context.parsed.y.toLocaleString();
 }
 }
 }
 }
 }
 });
-}
+});
+});
