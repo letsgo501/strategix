@@ -4,60 +4,66 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Strategix Business Simulator</title>
+<!-- Link to Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Link to custom stylesheet -->
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header>
-<h1>Welcome to Strategix</h1>
+<h1>Strategix Business Simulator</h1>
 <nav>
 <ul>
-<li><a href="#simulate">Simulate Business</a></li>
+<li><a href="#simulate">Simulate</a></li>
 <li><a href="#analytics">Analytics</a></li>
 <li><a href="#about">About</a></li>
 </ul>
 </nav>
 </header>
 
+<main>
+<!-- Simulation Section -->
 <section id="simulate">
-<h2>Business Simulation Dashboard</h2>
-<div class="simulation-paper">
-<div class="form-group">
-<label for="businessName">Business Name:</label>
-<input type="text" id="businessName" placeholder="Enter business name">
+<h2>Simulate Business</h2>
+<div class="paper">
+<form id="simulationForm">
+<label for="businessName">Business Name</label>
+<input type="text" id="businessName" name="businessName" required>
+
+<label for="investmentAmount">Investment Amount ($)</label>
+<input type="number" id="investmentAmount" name="investmentAmount" min="1000" step="500" required>
+
+<button type="submit" id="simulateBtn">Simulate Business</button>
+</form>
+<div id="resultsPanel">
+<h3>Projection Results</h3>
+<ul id="resultsList"></ul>
 </div>
-<div class="form-group">
-<label for="investment">Investment Amount ($):</label>
-<input type="number" id="investment" min="1000" step="500" placeholder="Enter investment">
-</div>
-<button id="simulateButton">Simulate Business</button>
-</div>
-<div id="result">
-<h3>Simulation Output</h3>
-<div id="outputContent"></div>
 </div>
 </section>
 
+<!-- Analytics Section -->
 <section id="analytics">
-<h2>Live Business Analytics</h2>
-<div id="chartContainer">
-<canvas id="businessChart"></canvas>
+<h2>Analytics</h2>
+<div class="chart-container">
+<canvas id="growthChart"></canvas>
 </div>
 </section>
 
+<!-- About Section -->
 <section id="about">
 <h2>About Strategix</h2>
 <p>
-Strategix is a business simulation tool that allows entrepreneurs to test strategies by simulating business performance. Powered
-by advanced analytics, our simulation projects growth based on user-provided investments and custom parameters.
+Strategix Business Simulator is a dynamic tool designed to help you project your business growth over a 5-year period. By simulating various growth rates and applying realistic financial principles, it provides valuable insights into how your investment could evolve over time.
 </p>
 </section>
+</main>
 
 <footer>
-<p>&copy; 2025 Strategix. All rights reserved.</p>
+<p>&copy; 2025 Strategix Business Simulator. All rights reserved.</p>
 </footer>
 
-<!-- Load Chart.js from a CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Link to custom script -->
 <script src="script.js"></script>
 </body>
 </html>
