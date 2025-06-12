@@ -1,43 +1,116 @@
-/* styles.css */
-body {
-font-family: Arial, sans-serif;
-text-align: center;
+/* Basic reset */
+* {
 margin: 0;
 padding: 0;
-background-color: #f4f4f4;
+box-sizing: border-box;
 }
 
+body {
+font-family: Arial, sans-serif;
+line-height: 1.6;
+background: #f4f4f4;
+color: #333;
+}
+
+/* Header styling */
 header {
-background-color: #222;
+background: #003366;
 color: white;
 padding: 20px;
+text-align: center;
 }
 
-section {
+nav ul {
+list-style: none;
+display: flex;
+justify-content: center;
+gap: 15px;
+}
+
+nav ul li a {
+color: white;
+text-decoration: none;
+font-weight: bold;
+}
+
+/* "Paper" container for simulation form */
+.paper {
+background: white;
 padding: 20px;
+margin: 20px auto;
+max-width: 500px;
+border-radius: 5px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-input, select, button {
+/* Form styling */
+form label {
+display: block;
+margin-bottom: 5px;
+font-weight: bold;
+}
+
+form input {
+width: 100%;
+padding: 8px;
+margin-bottom: 15px;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+form button {
+display: block;
+width: 100%;
+background: #003366;
+color: white;
 padding: 10px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+font-size: 16px;
+}
+
+/* Button hover state */
+form button:hover {
+background: #0059b3;
+}
+
+/* Results panel styling */
+#resultsPanel {
+margin-top: 20px;
+}
+
+#resultsPanel ul {
+list-style: none;
+}
+
+#resultsPanel li {
+padding: 5px 0;
+border-bottom: 1px solid #ddd;
+}
+
+/* Chart container styling */
+.chart-container {
+max-width: 600px;
+margin: 20px auto;
+}
+
+/* Footer styling */
+footer {
+background: #003366;
+color: white;
+text-align: center;
+padding: 15px 0;
+margin-top: 20px;
+}
+
+/* Responsive media query */
+@media (max-width: 768px) {
+header, footer {
+padding: 15px;
+}
+
+.paper {
 margin: 10px;
 }
-
-button {
-background-color: #007bff;
-color: white;
-border: none;
-cursor: pointer;
-}
-
-button:hover {
-background-color: #0056b3;
-}
-
-footer {
-background-color: #222;
-color: white;
-padding: 10px;
-position: fixed;
-width: 100%;
-bottom: 0;
 }
